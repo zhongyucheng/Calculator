@@ -10,3 +10,9 @@ Then there is time to update the input and output to make it more human.
 # Platform
 QT5.14
 
+---
+# GUI
+
+原版GUI不再更新，文件在OLD_ONE中
+原版图片：
+![图1](show/初版GUI.png)

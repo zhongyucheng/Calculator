@@ -1,9 +1,10 @@
-#ifndef CALCULATOR_H
+﻿#ifndef CALCULATOR_H
 #define CALCULATOR_H
 
 #include <QMainWindow>
 #include <QDebug>
 #include <QContextMenuEvent>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class calculator; }

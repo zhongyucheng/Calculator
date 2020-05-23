@@ -1,4 +1,4 @@
-#include "calculator.h"
+﻿#include "calculator.h"
 #include "ui_calculator.h"
 #include <QFloat16>
 #define PI 3.141592653
@@ -9,12 +9,12 @@ calculator::calculator(QWidget *parent)
 {
     ui->setupUi(this);
     status = input1;
-    ui->Btn_sin->setHidden(true);
-    ui->Btn_cos->hide();
-    ui->Btn_tan->hide();
-    ui->Btn_X2->hide();
-    ui->Btn_X3->hide();
-    ui->Btn_Xsqr->hide();
+//    ui->Btn_sin->setHidden(true);
+//    ui->Btn_cos->hide();
+//    ui->Btn_tan->hide();
+//    ui->Btn_X2->hide();
+//    ui->Btn_X3->hide();
+//    ui->Btn_Xsqr->hide();
 
 
 }
@@ -24,10 +24,7 @@ calculator::~calculator()
     delete ui;
 }
 
-//void calculator::contextMenuEvent(QContextMenuEvent *event)
-//{
-//    qDebug()<<"鼠标";
-//}
+
 //square,s_root,cube,sin,cos,tan
 void calculator::input_status_change(calculator::input_key _input)
 {
@@ -118,14 +115,14 @@ void calculator::ouput_answer(calculator::input_key _input)
         temp_answer = ui->Line_input1->text().toDouble() * ui->Line_input2->text().toDouble();
         qDebug()<<temp_answer;
         ui->Line_output->setText(QString::number(temp_answer));
-        input_history = input_1 + " × " + input_2 + " = " + QString::number(temp_answer);
+        input_history = input_1 + QString(" X ") + input_2 + " = " + QString::number(temp_answer);
         ui->Text_hitory->append(input_history);
         status =input1;
         break;
     case div:
         temp_answer = ui->Line_input1->text().toDouble() / ui->Line_input2->text().toDouble();
         ui->Line_output->setText(QString::number(temp_answer));
-        input_history = input_1 + " ÷ " + input_2 + " = " + QString::number(temp_answer);
+        input_history = input_1 + QString(" / ") + input_2 + " = " + QString::number(temp_answer);
         ui->Text_hitory->append(input_history);
         status =input1;
         break;
@@ -143,16 +140,19 @@ void calculator::ouput_answer(calculator::input_key _input)
     case cube:
         status = result;
         temp_answer = ui->Line_input1->text().toDouble() * ui->Line_input1->text().toDouble()*ui->Line_input1->text().toDouble();
-        input_history = input_1 + "^2" + " = " + QString::number(temp_answer);
+        input_history = input_1 + "^3" + " = " + QString::number(temp_answer);
         ui->Text_hitory->append(input_history);
         status =input1;
         break;
     case s_root:
+        temp_answer = pow(ui->Line_input1->text().toDouble(),0.5);
+        input_history = input_1 + "^1/2" + " = " + QString::number(temp_answer);
+        ui->Text_hitory->append(input_history);
         //qreal temp;
         status = result;
+        break;
         //temp_answer = qSqrt(temp)
     case sin:
-        //double temp = ui->Line_input1->text().toDouble();
         if(temp_1>0)
         {
             temp_answer = double(temp_1)/180*PI;
@@ -446,6 +446,7 @@ void calculator::on_Btn_ce_clicked()
     ui->Line_input1->clear();
     ui->Line_input2->clear();
     ui->Line_output->clear();
+    ui->Lable_alg->clear();
     input_temp.clear();
     input_1.clear();
     input_2.clear();
@@ -478,32 +479,39 @@ void calculator::on_Btn_mul_clicked()
 void calculator::on_Btn_div_clicked()
 {
     input_status_change(div);
-    ui->Lable_alg->setText("÷");
+    //ui->Lable_alg->setText("÷");
+
+    ui->Lable_alg->setText("/");
 }
 
 void calculator::on_Btn_X2_clicked()
 {
     input_status_change(square);
     ui->Lable_alg->setText("^2");
+    ouput_answer(square);
 
 }
 
 void calculator::on_Btn_X3_clicked()
 {
-    input_status_change(square);
+    input_status_change(cube);
     ui->Lable_alg->setText("^3");
+    ouput_answer(cube);
 }
 
 void calculator::on_Btn_Xsqr_clicked()
 {
-    input_status_change(square);
+    input_status_change(s_root);
     ui->Lable_alg->setText("^1/2");
+    ouput_answer(s_root);
 }
 
 void calculator::on_Btn_sin_clicked()
 {
-    input_status_change(square);
+    input_status_change(sin);
     ui->Lable_alg->setText("sin");
+
+    ouput_answer(sin);
 }
 
 
@@ -523,6 +531,7 @@ void calculator::on_Btn_OF_clicked()
     ui->Line_input2->clear();
     ui->Line_output->clear();
     ui->Text_hitory->clear();
+    ui->Lable_alg->clear();
     input_temp.clear();
     input_1.clear();
     input_2.clear();
